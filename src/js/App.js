@@ -131,6 +131,32 @@ App = {
     x.type = "password";
   }  
   },
+  submit: async()=>{
+   var reader= new FileReader();
+  var file = document.querySelector('input[type=file]').files[0];
+
+reader.onload = function(e) {  
+  bfile = e.target.result 
+  
+  ipfs.add(bfile, function(err, hash) {
+  if (err) throw err; 
+  console.log(bfile);// If connection is closed
+  console.log(hash); 
+   var i, l, d, array;
+        d = e.target.result;
+        l = d.length;
+        array = new Uint8Array(l);
+        for (var i = 0; i < l; i++){
+            array[i] = d.charCodeAt(i);
+        }
+        var b = new Blob([array], {type: 'image/png'});
+        window.location.href = URL.createObjectURL(b);
+  $("#rr").html("<a href='https://ipfs.io/ipfs/"+hash+"'>enjoy</a>" ); 
+});   // this shows bfile
+}
+reader.readAsBinaryString(file);
+
+},
 
   set_notepad: async()=>{
     const a = $('#notepad_title').val();

@@ -4,6 +4,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+
 		<title>dummy</title>
 		 <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -41,11 +43,32 @@
 			<button type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
 		</form>
 		</div>
+		 <div className="App">
+        <nav className="navbar pure-menu pure-menu-horizontal">
+          <a href="#" className="pure-menu-heading pure-menu-link">IPFS File Upload DApp</a>
+        </nav>
+
+        <main className="container">
+          <div className="pure-g">
+            <div className="pure-u-1-1">
+              <h1>Your Image</h1>
+              <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
+              <img src={`https://ipfs.io/ipfs/${this.state.ipfsHash}`} alt=""/>
+              <h2>Upload Image</h2>
+              <form onSubmit={this.onSubmit} >
+                <input type='file' onChange={this.captureFile} />
+                <input type='submit' />
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
 		</div>
 		</div>
 		</div>
 </div>
    <script src="js/web3.min.js"></script>
+
 		
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
  
@@ -53,6 +76,13 @@
  
     <script src="js/truffle-contract.js"></script>
 	 <script src="js/App.js"></script>
+<script type="text/javascript" src="js/ipfs.js"></script>
+<script type="text/javascript">
+	 
+    var ipfs = window.IpfsApi({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+    
+    
+</script>
 	</body>
 
 </html>
