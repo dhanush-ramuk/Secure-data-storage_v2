@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>dummy</title>
+		 <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	</head>
+	<body>
+		<!-- a form for getiing important identities
+		right now has only one field, additional fields can be added in the future -->
+		<div class="container-fluid">
+						<div class="row">
+				<div class="col-lg-2" style="background-color: hsl(120, 60%, 70%);">
+				<div>	<button onclick="App.show_password(); return false;">password manager</button></div>
+				<div>	<button onclick="App.show_notepad(); return false;">Notepad</button></div>
+				</div>
+					<div class="col-lg-10">
+		<div id="password_manager" >
+			<h2>Password manager</h2>
+		<form onSubmit="App.set(); return false;" class="form-group">
+				<label for="a_id"><b>Account name:</b></label>
+			<input type="text" id="a_name" class="form-control"></input>
+				<label for="a_id"><b>Password:</b></label>
+			<input type="password"  id="a_id" class="form-control"></input>
+			
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+			<table id="rtable"></table>
+		</div>
+		<div id="notepad" hidden>
+			<h2>Notepad</h2>
+			<form onSubmit="App.set_notepad(); return false;" class="form-group">
+				<label for="notepad_title"><b>Title:</b></label>
+				<input type="text" id="notepad_title" class="form-control"></input>
+				<label for="notepad_text"><b>Yours secrets:</b></label>
+				<textarea rows="5" cols="10" id="notepad_text" class="form-control"></textarea>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			<table id="ttable"></table>
+		</div>
+	</div>
+</div>
+
+		
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+       <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+	 <script src="js/App.js"></script>
+	</body>
+
+</html>
