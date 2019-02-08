@@ -10,12 +10,18 @@ App = {
   title: [],
   k: 0,
   m: 0,
+  o: 0,
+  hash_file: null,
+  name_file: null,
+  file: null,
+  filehash:[],
+  filename:[],
     init: async()=>{
     await App.initweb3();
     await App.initcontract();
     await App.render();
     await App.get();
-    return App.get_text();
+    await App.get_text();
   },
   initweb3: async() =>{
     if(typeof web3 !== 'undefined'){
@@ -93,11 +99,19 @@ App = {
   show_password: async() =>{
     $("#password_manager").show();
     $("#notepad").hide();
+    $("#files").hide();
   },
     show_notepad: async() =>{
     $("#password_manager").hide();
     $("#notepad").show();
+    $("#files").hide();
   },
+   show_uploader: async() =>{
+    $("#password_manager").hide();
+    $("#notepad").hide();
+    $("#files").show();
+  },
+
 
 
   set: async() =>{
@@ -113,7 +127,7 @@ App = {
         if(App.k>0){
             App.name[0] = await App.contractInstance.get_accountname(0, {from: App.account});
      App.id[0] = await App.contractInstance.get_password(0, {from: App.account});
-    var table = "<tr><td style:'margin-top:500px'>"+App.name[0]+"</td><td><input type='password' value="+App.id[0]+" id="+i+"></input></td><td><input type='submit' id='"+i+"fh' value='reveal/hide' onclick='App.reveal("+i+"); return false;'></input></td></tr>";
+    var table = "<tr><td>"+App.name[0]+"</td><td><input type='password' value="+App.id[0]+" id="+i+"></input></td><td><input type='submit' id='"+i+"fh' value='reveal/hide' onclick='App.reveal("+i+"); return false;'></input></td></tr>";
     for ( i = 1; i<App.k; i++) {
      App.name[i] = await App.contractInstance.get_accountname(i, {from: App.account});
      App.id[i] = await App.contractInstance.get_password(i, {from: App.account});
@@ -131,30 +145,110 @@ App = {
     x.type = "password";
   }  
   },
-  submit: async()=>{
-   var reader= new FileReader();
-  var file = document.querySelector('input[type=file]').files[0];
 
-reader.onload = function(e) {  
-  bfile = e.target.result 
-  
-  ipfs.add(bfile, function(err, hash) {
+  get_files: async()=>{
+  App.file = await document.querySelector('input[type=file]').files[0];
+ var reader= new FileReader();
+  App.name_file = App.file.name;
+console.log("jhkjhlk");
+  reader.onload =  function(e) {  
+  var bfile = e.target.result;
+  console.log("kjjk");
+   ipfs.add(bfile, async function(err, hash) {
   if (err) throw err; 
-  console.log(bfile);// If connection is closed
-  console.log(hash); 
+  App.hash_file = hash; 
+  console.log("jj");
+$("#submit_button").show();
+
+});   
+
+}
+reader.readAsBinaryString(App.file);
+},
+
+submit: async()=>{
+
+
+
+var h = App.hash_file;
+  App.name_file = App.file.name;
+
+   await App.contractInstance.add_files(App.hash_file, App.name_file, {from: App.account});
+ 
+   var i = 0;
+        App.o = await App.contractInstance.get_length_files({from: App.account});
+        console.log(App.o);
+        if(App.o>0){
+            App.filename[0] = await App.contractInstance.get_filename(0, {from: App.account});
+    var table = "<tr><td>"+App.filename[0]+"</td><td><input type='submit' id='"+i+"fh' value='download' onclick='App.download("+i+"); return false;'></input></td></tr>";
+    for ( i = 1; i<App.o; i++) {
+     App.filename[i] = await App.contractInstance.get_filename(i, {from: App.account});
+ 
+    table += "<tr><td>"+App.filename[i]+"</td><td><input type='submit' value='download' onclick='App.download("+i+"); return false;'></input></td></tr>";
+    }
+    $('#rr').html(table);
+    }
+},
+  download: async(i)=>{
+    var bfile = await App.contractInstance.get_filehash(i, {from: App.account});
+    var filename = await App.contractInstance.get_filename(i, {from: App.account});
+    
+   var reader= new FileReader();
+    
    var i, l, d, array;
-        d = e.target.result;
-        l = d.length;
+  ipfs.cat(bfile, function(err, buffer) {
+  if (err) throw err;  
+  var res = buffer.toString();
+  
+        d = res;
+        l = res.length;
         array = new Uint8Array(l);
         for (var i = 0; i < l; i++){
             array[i] = d.charCodeAt(i);
         }
-        var b = new Blob([array], {type: 'image/png'});
-        window.location.href = URL.createObjectURL(b);
-  $("#rr").html("<a href='https://ipfs.io/ipfs/"+hash+"'>enjoy</a>" ); 
-});   // this shows bfile
-}
-reader.readAsBinaryString(file);
+
+        var type = filename.split('.').pop();
+        console.log(type);
+        if (type=="png"){
+         b = new Blob([array], {type: 'image/png'});
+        } else if(type=="pdf"){
+
+         b = new Blob([array], {type: 'application/pdf'});
+        }else if(type=="jpg"||type=="jpeg"){
+
+         b = new Blob([array], {type: 'image/jpeg'});
+        }else if(type=="pdf"){
+
+         b = new Blob([array], {type: 'application/pdf'});
+        }else if(type=="aac"){
+
+         b = new Blob([array], {type: 'audio/aac'});
+        }else if(type=="doc"){
+
+         b = new Blob([array], {type: 'application/msword'});
+        }else if(type=="docx"){
+
+         b = new Blob([array], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+        }else if(type==".docx"){
+
+         b = new Blob([array], {type: 'application/pdf'});
+        }else if(type=="gif"){
+
+         b = new Blob([array], {type: 'image/gif'});
+        }else if(type=="mp3"){
+
+         b = new Blob([array], {type: 'audio/mpeg'});
+        }else if(type=="m4a"){
+
+         b = new Blob([array], {type: 'audio/mp3'});
+        }
+        
+    
+        window.location.href =  URL.createObjectURL(b);
+   
+});   
+
+    
 
 },
 

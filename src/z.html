@@ -16,6 +16,7 @@
 				<div class="col-lg-2" style="background-color: hsl(120, 60%, 70%);">
 				<div>	<button onclick="App.show_password(); return false;">password manager</button></div>
 				<div>	<button onclick="App.show_notepad(); return false;">Notepad</button></div>
+				<div>	<button onclick="App.show_uploader(); return false;">Uploader</button></div>
 				</div>
 					<div class="col-lg-10">
 		<div id="password_manager" >
@@ -41,12 +42,8 @@
 			</form>
 			<table id="ttable"></table>
 		</div>
-		 <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
-          <a href="#" className="pure-menu-heading pure-menu-link">IPFS File Upload DApp</a>
-        </nav>
-
-        <main className="container">
+		 <div className="App" id="files" hidden>
+       
           <div className="pure-g">
             <div className="pure-u-1-1">
               <h1>Your Image</h1>
@@ -54,13 +51,12 @@
              
               <h2>Upload Image</h2>
               <form onSubmit="App.submit(); return false;" >
-                <input type='file' />
-                <input type='submit' />
+                <input type='file' onchange="App.get_files();" />
+                <input type='submit' id="submit_button" hidden />
               </form>
-              <div id="rr"></div>
+              <table id="rr"></table>
             </div>
           </div>
-        </main>
       </div>
 	</div>
 </div>

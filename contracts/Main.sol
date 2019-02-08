@@ -12,8 +12,14 @@ contract Main{
 		string text;
 	}
 
+	struct User3{
+		string name;
+		string hash;
+	}
+
 	mapping(address=>User[]) public user;
-	mapping(address=>User2[]) public user2; 
+	mapping(address=>User2[]) public user2;
+	mapping(address=>User3[]) public user3; 
 	mapping(address=>bool) public user_check;
 	mapping(address=>string) public user_login;
 
@@ -33,6 +39,10 @@ contract Main{
 
 	function add_text(string memory _title, string memory _text) public{
 		user2[msg.sender].push(User2(_title, _text));
+	}
+
+	function add_files(string memory _hash, string memory _name) public{
+		user3[msg.sender].push(User3(_name, _hash));
 	}
 
 	function check() public view returns(bool){
@@ -55,13 +65,21 @@ contract Main{
 	function get_text(uint i) public view returns(string memory){		
 		return user2[msg.sender][i].text;
 	}
+		function get_filename(uint i) public view returns(string memory){		
+		return user3[msg.sender][i].name;
+	}
+
+	function get_filehash(uint i) public view returns(string memory){		
+		return user3[msg.sender][i].hash;
+	}
 	
-
-
 	function get_length()public view returns(uint){
 		return user[msg.sender].length;
 	}
 		function get_length_text()public view returns(uint){
 		return user2[msg.sender].length;
+	}
+		function get_length_files()public view returns(uint){
+		return user3[msg.sender].length;
 	}
 }
