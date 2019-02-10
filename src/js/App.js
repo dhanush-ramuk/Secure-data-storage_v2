@@ -16,6 +16,7 @@ App = {
   file: null,
   filehash:[],
   filename:[],
+  login: 0,
     init: async()=>{
     await App.initweb3();
     await App.initcontract();
@@ -58,26 +59,46 @@ App = {
     var login = $('#login');
     var signup = $('#signup');
     var main = $("#main");
+    var welcome = $("#welcome_account");
+    var but = $("#start_button");
 
     const contract = await App.contracts.Mycontract.deployed();
     App.contractInstance = contract;
     const result = await App.contractInstance.check({from: App.account}); 
-  $(" #account_address").html(App.account);    
+  $(" #account_address").html(App.account);
+  welcome.html("Hi "+ App.account);    
     if(result==true){
-      
-      signup.hide();
-      login.show();
-    $("#main").show();
+      App.login = 1;
+      but.html( 'login');  
 
     }else{
-      
-      login.hide();
-      signup.show();
+      but.html( 'get started');   
 
-    $("#main").show();
     }
 
   },
+openForm: async()=>{
+if(App.login==1)
+{
+  document.getElementById("login").style.display = "block";
+}else{
+  console.log("kjkfd");
+document.getElementById("signup").style.display = "block";
+}
+
+},
+
+closeForm: async()=>{
+  if(App.login==1)
+{
+  document.getElementById("login").style.display = "none";
+}else{
+  console.log("kjkfd");
+document.getElementById("signup").style.display = "none";
+}
+
+
+},
 
   login: async() =>{
     const id = $('#passw').val();

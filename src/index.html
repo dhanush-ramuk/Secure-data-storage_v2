@@ -1,69 +1,58 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-		<title>dummy</title>
-		 <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Secure Storage</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-8" style="background-color: hsl(120, 60%, 70%);"><h1>Space for explaining my site.</h1></div>
-			<div class="col-lg-4">
-		<div id="main" hidden>
+				<div class="col-md-8">
+					<h2 id="heading">Unlimited Storage + Unassailable Security</h2>
 
-		<div id="login" >
-		<form onSubmit="App.login(); return false;" class="form-group">
-			<h2>Login</h2>
-					<h4 style="width:500px"><b>Your ID is your cryptocurrency wallet address:</b></h4>
-					<h3 id="account_address"></h3>
-			<label for="passw"><b>Password</b></label>
-			<input type="password"  id="passw" class="form-control"></input>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+				</div>
+				<div class="col-md-4">
+					<h4 id="welcome_account"></h4>
+					<button id="start_button" class="open-button" onclick="App.openForm(); return false"></button>
+					<div id="main">
+						<div id="login" class="form-popup" >
+							<form onSubmit="App.login(); return false;" class="form-container">
+								<h2><b>Login</b></h2>
+								<h4 style="width:500px"><b>Your ID is your cryptocurrency wallet address:</b></h4>
+								<h3 id="account_address"></h3>
+								<label for="passw"><b>Password</b></label>
+								<input type="password"  id="passw" class="form-control"></input>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+						<div id="signup" class="form-popup">
+							<form onSubmit="App.signup(); return false;" class="form-container">
+								<h2 style="color:black"><b>Sign up</b></h2>
+								<h4 style="width:300px; margin-top: 30px;color:black"><b>Your ID is your Metamask wallet Public address:</b> </h4>
+								<h3 style="color:black width:200" id="account_address"></h3>
+								<p style="width: 300px; color:black"><b>Important:</b> This ID is permanent and you can't change it. You can't login to this site with different address so don't change your public address in your Metamask wallet while logging in.</p>
+								<label for="pass" style="color:black"><b>Password:</b></label>
+								<input type="password"  id="pass" class="form-control" style="color:black"></input>
+								<label for="pass1" style="color:black"><b>re-enter password:</b></label>
+								<input type="password"  id="pass1" class="form-control" style="color:black"></input>
+								<button type="submit" class="btn btn-primary" style="margin-top: 10px; color:black">Submit</button>
+								 <button type="button" class="btn cancel" onclick="App.closeForm(); return false">Close</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	<div id="signup">
-		<form onSubmit="App.signup(); return false;">
-
-			<h2><b>Sign up</b></h2>
-					<h4 style="width:500px; margin-top: 30px"><b>Your ID is your Metamask wallet Public address:</b> </h4>
-					<h3 id="account_address"></h3>
-					<p style="width: 500px"><b>Important:</b> This ID is permanent and you can't change it. You can't login to this site with different address so don't change your public address in your Metamask wallet while logging in.</p>
-						<label for="pass"><b>Password:</b></label>
-			<input type="password"  id="pass" class="form-control"></input>
-						<label for="pass1"><b>re-enter password:</b></label>
-			<input type="password"  id="pass1" class="form-control"></input>
-
-			<button type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
-		</form>
-		</div>
-		
-		</div>
-		</div>
-		</div>
-</div>
-   <script src="js/web3.min.js"></script>
-
-		
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
- 
-       <script src="js/bootstrap.min.js"></script>
- 
-    <script src="js/truffle-contract.js"></script>
-	 <script src="js/App.js"></script>
-<script type="text/javascript" src="js/ipfs.js"></script>
-<script type="text/javascript">
-	 
-    var ipfs = window.IpfsApi({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-    
-    
-</script>
+    	<script src="js/web3.min.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    	<script src="js/bootstrap.min.js"></script>
+    	<script src="js/truffle-contract.js"></script>
+		<script src="js/App.js"></script>
+		<script type="text/javascript" src="js/ipfs.js"></script>
 	</body>
 
 </html>
