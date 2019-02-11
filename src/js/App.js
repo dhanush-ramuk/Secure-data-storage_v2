@@ -65,14 +65,16 @@ App = {
     const contract = await App.contracts.Mycontract.deployed();
     App.contractInstance = contract;
     const result = await App.contractInstance.check({from: App.account}); 
-  $(" #account_address").html(App.account);
+  $(" #account_address").html(App.account.substring(0,22).bold()+"...");
   welcome.html("Hi "+ App.account);    
     if(result==true){
       App.login = 1;
-      but.html( 'login');  
+      but.show();
+      but.html('login');  
 
     }else{
-      but.html( 'get started');   
+      but.show();
+      but.html('get started');   
 
     }
 
@@ -96,7 +98,6 @@ closeForm: async()=>{
   console.log("kjkfd");
 document.getElementById("signup").style.display = "none";
 }
-
 
 },
 
