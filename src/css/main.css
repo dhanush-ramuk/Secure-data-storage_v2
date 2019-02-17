@@ -90,6 +90,10 @@ background: #333333; /* Old browsers */
 
 }
 
+#box {
+	 float: right;
+}
+
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;

@@ -172,14 +172,16 @@ document.getElementById("signup").style.display = "none";
   App.file = await document.querySelector('input[type=file]').files[0];
  var reader= new FileReader();
   App.name_file = App.file.name;
-console.log("jhkjhlk");
+          var type = App.name_file.split('.').pop();
+if(type!="mp3"||"gif"||"docx"||"aac"||"png"||"jpeg"||"jpg"||"doc"){
+  alert("Currently this file type is not supported. Please convert the type and try again.")
+  return 0;
+}
   reader.onload =  function(e) {  
   var bfile = e.target.result;
-  console.log("kjjk");
    ipfs.add(bfile, async function(err, hash) {
   if (err) throw err; 
   App.hash_file = hash; 
-  console.log("jj");
 $("#submit_button").show();
 
 });   
@@ -260,9 +262,6 @@ var h = App.hash_file;
         }else if(type=="mp3"){
 
          b = new Blob([array], {type: 'audio/mpeg'});
-        }else if(type=="m4a"){
-
-         b = new Blob([array], {type: 'audio/mp3'});
         }
         
     

@@ -3,6 +3,7 @@
 		<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 		<title>dummy</title>
 		 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -13,12 +14,8 @@
 		right now has only one field, additional fields can be added in the future -->
 		<div class="container-fluid">
 						<div class="row">
-				<div class="col-lg-2" style="background-color: hsl(120, 60%, 70%);">
-				<div>	<button onclick="App.show_password(); return false;">password manager</button></div>
-				<div>	<button onclick="App.show_notepad(); return false;">Notepad</button></div>
-				<div>	<button onclick="App.show_uploader(); return false;">Uploader</button></div>
-				</div>
-					<div class="col-lg-10">
+
+					<div class="col-lg-10" style="background-color: white">
 		<div id="password_manager" >
 			<h2>Password manager</h2>
 		<form onSubmit="App.set(); return false;" class="form-group">
@@ -29,7 +26,7 @@
 			
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
-			<table id="rtable"></table>
+			<table id="rtable" class="w3-table-all w3-card-4"></table>
 		</div>
 		<div id="notepad" hidden>
 			<h2>Notepad</h2>
@@ -40,25 +37,28 @@
 				<textarea rows="5" cols="10" id="notepad_text" class="form-control"></textarea>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
-			<table id="ttable"></table>
+			<table id="ttable" class="w3-table-all w3-card-4"></table>
 		</div>
 		 <div className="App" id="files" hidden>
        
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h1>Your Image</h1>
-              <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
-             
-              <h2>Upload Image</h2>
+              <h2>Upload Files</h2>
               <form onSubmit="App.submit(); return false;" >
                 <input type='file' onchange="App.get_files();" />
                 <input type='submit' id="submit_button" hidden />
               </form>
-              <table id="rr"></table>
+              <table id="rr" class="w3-table-all w3-card-4"></table>
             </div>
           </div>
       </div>
+
 	</div>
+		<div class="col-lg-2" style="background-color: white">
+				<div>	<button class="w3-button w3-xxlarge" onclick="App.show_password(); return false;">Password</button></div>
+				<div>	<button class="w3-button w3-xxlarge" onclick="App.show_notepad(); return false;">Notepad</button></div>
+				<div>	<button class="w3-button w3-xxlarge" onclick="App.show_uploader(); return false;">Uploader</button></div>
+				</div>
 </div>
 
 	 <script type="text/javascript" src="js/ipfs-min.js"></script>
