@@ -173,10 +173,11 @@ document.getElementById("signup").style.display = "none";
  var reader= new FileReader();
   App.name_file = App.file.name;
           var type = App.name_file.split('.').pop();
-if(type!="mp3"||"gif"||"docx"||"aac"||"png"||"jpeg"||"jpg"||"doc"){
-  alert("Currently this file type is not supported. Please convert the type and try again.")
-  return 0;
-}
+          console.log(type);
+//if(type!="mp3"||"gif"||"docx"||"aac"||"png"||"jpeg"||"jpg"||"doc"||"JPG"){
+  //alert("Currently this file type is not supported. Please convert the type and try again.")
+  //return 0;
+//}
   reader.onload =  function(e) {  
   var bfile = e.target.result;
    ipfs.add(bfile, async function(err, hash) {
