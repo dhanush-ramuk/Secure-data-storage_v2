@@ -17,6 +17,7 @@ App = {
   filehash:[],
   filename:[],
   login: 0,
+  a1: null,
     init: async()=>{
     await App.initweb3();
     await App.initcontract();
@@ -84,26 +85,76 @@ if(App.login==1)
 {
   document.getElementById("login").style.display = "block";
 }else{
-  console.log("kjkfd");
+  
 document.getElementById("signup").style.display = "block";
 }
 
 },
 
+open_hash: async()=>{
+      const id = $("#pass").val();
+       const a = web3.sha3(id);
+    await App.contractInstance.signup(id, a, {from: App.account});
+     
+        window.location = 'z.html'; 
+        $("#password_manager").show();
+},
 closeForm: async()=>{
   if(App.login==1)
 {
   document.getElementById("login").style.display = "none";
+   $("#start_button").show();
+
+
 }else{
-  console.log("kjkfd");
 document.getElementById("signup").style.display = "none";
+
 }
 
 },
+closeFormeh: async()=>{
+  $("#reveal").hide();
+  document.getElementById("login").style.display = "block";
+},
+closeFormh: async()=>{
+  $("#hash").hide();
+  document.getElementById("signup").style.display = "block";
+},
 
-  login: async() =>{
+
+reveal1: async()=>{
+  $("#start_button").hide();
+  document.getElementById("login").style.display = "none";
+  document.getElementById("reveal").style.display = "block";
+
+},
+
+hash_check: async()=>{
+
+      const result = await App.contractInstance.get_hash({from: App.account});
+      
+      const a = $("#hash_inputh").val();
+      console.log("3");
+      console.log(result,a);
+      if(result==a){
+        console.log("not 6");
+        const pass = await App.contractInstance.login({from: App.account});
+        $("#pass_line").html(pass);
+        $("#sub").hide();
+        $("#okay").show(); 
+      }
+
+},
+
+mudiyala: async()=>{
+  document.getElementById("login").style.display = "block";
+  document.getElementById("reveal").style.display = "none";
+},
+
+  logi: async() =>{
     const id = $('#passw').val();
     const result = await App.contractInstance.login({from: App.account});
+    console.log(result, id)
     if(result==id){
        window.location = 'z.html';
        $("#password_manager").show();
@@ -112,11 +163,21 @@ document.getElementById("signup").style.display = "none";
   signup: async() =>{
     const id = $("#pass").val();
     const id1 = $("#pass1").val();
-    if(id == id1){
-     await App.contractInstance.signup(id, {from: App.account});
-        window.location = 'z.html'; 
-        $("#password_manager").show();
+
+    if(id != id1){
+      alert("Passwords do not match.");
+  
+
+
     } 
+a = web3.sha3(id);
+$("#hash_line").html(a);
+console.log(a);
+ $("#start_button").hide();
+document.getElementById("signup").style.display = "none";
+
+ document.getElementById("hash").style.display = "block";
+
   },
   show_password: async() =>{
     $("#password_manager").show();

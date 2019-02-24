@@ -11,7 +11,7 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-					<div class="w3-card-4" style="color: white;"><h1 style="color: white; margin-top: 10px; margin-left: 10px; margin-right: 10px; margin-bottom: 50px;">Ninja Storage</h1>
+					<div class="w3-card-4" style="color: white;min-height: 50px; max-width: 250px;"><h1 style="color: white; margin-top: 10px; margin-left: 10px; margin-right: 10px; margin-bottom: 50px;">Ninja Storage</h1>
 					</div>
 					<h2 id="heading" style="color: white; margin-top: 50px; margin-left: 10px; margin-right: 10px; margin-bottom: 10px;">You think your personal data is safe online? Think again!</h2>
 					
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<
+					
 					</div>
 				</div>
 					</div>
@@ -45,20 +45,21 @@
 					<div id="main">
 						<div id="login" class="form-popup" class="w3-container">
 							<div class="w3-card-4">
-							<form onSubmit="App.login(); return false;" class="form-container">
+							<form  return false;" class="form-container">
 								<h2 style="color:white">Login</h2>
 								<h6 style="width:300px; margin-top: 10px;color:white">Your ID is your cryptocurrency wallet address:</h6>
 								<h4 style="width: 300px; color:white; font-size: 20"id="account_address"></h4>
 								<label for="passw" style="color:white"><b>Password</b></label>
 								<input type="password"  id="passw" class="form-control" style="color:black"></input>
-								<button type="submit" class="submit" >Submit</button>
+								<input onclick="App.reveal1(); return false;" type="submit" value="forgot password"  style="color: white; max-width: 135px; max-height: 50px; margin-bottom: 20px; font" id="forgot-password">forgot password</input>
+								<button  type="button" class="submit" onclick="App.logi(); return false" style="margin-top: 0px">Submit</button>
 								<button type="button" class="cancel" onclick="App.closeForm(); return false">Close</button>
 								</div>
 							</form>
 						</div>
 						<div id="signup"  class="form-popup" class="w3-container">
 							<div class="w3-card-4">
-							<form onSubmit="App.signup(); return false;" class="form-container" >
+							<form onsubmit="App.signup(); return false"  class="form-container" >
 								<h2 style="color:white">Enter into Blockchain</h2>
 								<h6 style="width:300px; margin-top: 10px;color:white">Your ID is your Metamask wallet Public address: </h6>
 								<h4 style="width: 300px; color:white; font-size: 22" id="account_address"></h4>
@@ -69,6 +70,28 @@
 								<input type="password"  id="pass1" class="form-control" style="color:black"></input>
 								<button type="submit" class="submit" >Submit</button>
 								 <button type="button" class="cancel" onclick="App.closeForm(); return false">Close</button>
+							</form>
+							</div>
+						</div>
+						<div id="hash"  class="form-popup" class="w3-container">
+							<div class="w3-card-4">
+							<form  class="form-container1" >
+								<h5 style="color:white">Save and hide this unique hash as it is used to recover your password if forgotten.</h5>
+								<h4 id="hash_line" style="color:white"></h4>
+								<button onclick="App.open_hash(); return false;" type="submit" class="submit">Submit</button>
+								<button type="button" class="cancel" onclick="App.closeFormh(); return false">Close</button>
+							</form>
+							</div>
+						</div>
+						<div id="reveal"  class="form-popup" class="w3-container">
+							<div class="w3-card-4">
+							<form   class="form-container1" >
+								<h4 style="color: white;">Enter your hash</h4>
+							<input type="text" style="min-width: 400;" class="form-control" style="color: black" id="hash_inputh"></input>
+								<h4 id="pass_line" style="color:white"></h4>
+								<button onclick="App.hash_check(); return false;" type="submit" class="submit" id="sub">Submit</button>
+								<button type="submit" onclick="App.mudiyala(); return false;" class="submit" id="okay" hidden>Okay</button>
+								<button type="button" class="cancel" onclick="App.closeFormeh(); return false">Close</button>
 							</form>
 							</div>
 						</div>

@@ -21,12 +21,18 @@ contract Main{
 	mapping(address=>User2[]) public user2;
 	mapping(address=>User3[]) public user3; 
 	mapping(address=>bool) public user_check;
+	mapping(address=>string) public hash;
+
 	mapping(address=>string) public user_login;
 
-	function signup(string memory _password) public{
+	function signup(string memory _password, string memory _hash) public{
 		user_login[msg.sender] = _password;
 		user_check[msg.sender] = true;
+		hash[msg.sender] = _hash;		
 	}
+
+
+
 
 	function login() public view returns(string memory){
 		return user_login[msg.sender];
@@ -76,10 +82,15 @@ contract Main{
 	function get_length()public view returns(uint){
 		return user[msg.sender].length;
 	}
-		function get_length_text()public view returns(uint){
+
+	function get_length_text()public view returns(uint){
 		return user2[msg.sender].length;
 	}
 		function get_length_files()public view returns(uint){
 		return user3[msg.sender].length;
+	}
+
+	function get_hash()public view returns(string memory){
+		return hash[msg.sender];
 	}
 }
