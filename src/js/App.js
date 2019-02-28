@@ -22,8 +22,19 @@ App = {
     await App.initweb3();
     await App.initcontract();
     await App.render();
+     $("#load3").show();
+
+    await App.gandu_function();
+    $("#load3").hide();
+    $("#load1").show();
     await App.get();
+    $("#load1").hide();
+    $("#load2").show();
+
     await App.get_text();
+    $("#load2").hide();
+  
+
   },
   initweb3: async() =>{
     if(typeof web3 !== 'undefined'){
@@ -97,7 +108,7 @@ open_hash: async()=>{
     await App.contractInstance.signup(id, a, {from: App.account});
      
         window.location = 'z.html'; 
-        $("#password_manager").show();
+        $("#files").show();
 },
 closeForm: async()=>{
   if(App.login==1)
@@ -157,7 +168,9 @@ mudiyala: async()=>{
     console.log(result, id)
     if(result==id){
        window.location = 'z.html';
-       $("#password_manager").show();
+       $("#files").show();
+    }else{
+      alert("Passwords do not match.");
     }
   },
   signup: async() =>{
@@ -190,6 +203,7 @@ document.getElementById("signup").style.display = "none";
     $("#files").hide();
   },
    show_uploader: async() =>{
+    $("#buttonn").prop('disabled', true);
     $("#password_manager").hide();
     $("#notepad").hide();
     $("#files").show();
@@ -201,6 +215,7 @@ document.getElementById("signup").style.display = "none";
     const name = $('#a_name').val();
     const id = $('#a_id').val();
     await App.contractInstance.add_id(name, id , {from: App.account});
+
     return App.get();
    
   },
@@ -210,14 +225,15 @@ document.getElementById("signup").style.display = "none";
         if(App.k>0){
             App.name[0] = await App.contractInstance.get_accountname(0, {from: App.account});
      App.id[0] = await App.contractInstance.get_password(0, {from: App.account});
-    var table = "<tr><td>"+App.name[0]+"</td><td><input type='password' value="+App.id[0]+" id="+i+"></input></td><td><input type='submit' id='"+i+"fh' value='reveal/hide' onclick='App.reveal("+i+"); return false;'></input></td></tr>";
+    var table = "<tr style='margin-bottom:5px;  border-top:0.5px solid #ffffff; border-bottom:0.5px solid #ffffff'><td style='color:white;font-size:25'>"+App.name[0]+"</td><td><input type='password' style:'size:25' value="+App.id[0]+" id="+i+"></input></td><td><input type='submit' style='color: white;margin-top: 5px; font-size:17' class='btn btn-primary' id='"+i+"fh' value='reveal/hide' onclick='App.reveal("+i+"); return false;'></input></td></tr>";
     for ( i = 1; i<App.k; i++) {
      App.name[i] = await App.contractInstance.get_accountname(i, {from: App.account});
      App.id[i] = await App.contractInstance.get_password(i, {from: App.account});
-    table += "<tr><td>"+App.name[i]+"</td><td><input type='password' value="+App.id[i]+" id="+i+"></input></td><td><input type='submit' value='reveal/hide' onclick='App.reveal("+i+"); return false;'></input></td></tr>";;
+    table += "<tr style='margin-bottom:5px; border-bottom:0.5px solid #ffffff'><td style='color:white;font-size:25'>"+App.name[i]+"</td><td><input type='password' value="+App.id[i]+" id="+i+"></input></td><td><input type='submit' style='color: white;margin-top: 5px; font-size:17' class='btn btn-primary' value='reveal/hide' onclick='App.reveal("+i+"); return false;'></input></td></tr>";
     }
     $('#rtable').html(table);
     }
+     $("#pass_form")[0].reset();
   },
 
   reveal: async(el) =>{     
@@ -235,19 +251,24 @@ document.getElementById("signup").style.display = "none";
   App.name_file = App.file.name;
           var type = App.name_file.split('.').pop();
           console.log(type);
-//if(type!="mp3"||"gif"||"docx"||"aac"||"png"||"jpeg"||"jpg"||"doc"||"JPG"){
-  //alert("Currently this file type is not supported. Please convert the type and try again.")
-  //return 0;
-//}
+          
+if(type=="mp3"||type=="gif"||type=="docx"||type=="aac"||type=="png"||type=="jpeg"||type=="jpg"||type=="doc"||type=="JPG"||type=="pdf"||type=="xls"||type=="xlsx"){
+
+
+
+$("#bleh").show();
   reader.onload =  function(e) {  
   var bfile = e.target.result;
    ipfs.add(bfile, async function(err, hash) {
   if (err) throw err; 
   App.hash_file = hash; 
-$("#submit_button").show();
-
+  $("#bleh").hide();
+$("#buttonn").prop('disabled', false);
 });   
-
+}
+}else{
+    alert("Currently this file type is not supported. Please convert the type and try again.");
+  return App.gandu_function();
 }
 reader.readAsBinaryString(App.file);
 },
@@ -260,20 +281,25 @@ var h = App.hash_file;
   App.name_file = App.file.name;
 
    await App.contractInstance.add_files(App.hash_file, App.name_file, {from: App.account});
- 
+
+ return App.gandu_function();
+ },
+
+ gandu_function: async()=>{
    var i = 0;
         App.o = await App.contractInstance.get_length_files({from: App.account});
-        console.log(App.o);
+        
         if(App.o>0){
             App.filename[0] = await App.contractInstance.get_filename(0, {from: App.account});
-    var table = "<tr><td>"+App.filename[0]+"</td><td><input type='submit' id='"+i+"fh' value='download' onclick='App.download("+i+"); return false;'></input></td></tr>";
+    var table = "<tr style='margin-bottom:5px;border-top:0.5px solid #ffffff; border-bottom:0.5px solid #ffffff'><td style='color:white;font-size:25'>"+App.filename[0]+"</td><td><input style='color: white;margin-top: 5px; font-size:15' class='btn btn-primary' type='submit' id='"+i+"fh' value='download' onclick='App.download("+i+"); return false;'></input></td></tr>";
     for ( i = 1; i<App.o; i++) {
      App.filename[i] = await App.contractInstance.get_filename(i, {from: App.account});
  
-    table += "<tr><td>"+App.filename[i]+"</td><td><input type='submit' value='download' onclick='App.download("+i+"); return false;'></input></td></tr>";
+    table += "<tr style='margin-bottom:5px; border-bottom:0.5px solid #ffffff'><td style='color:white;font-size:25'>"+App.filename[i]+"</td><td><input type='submit' style='color: white;margin-top: 5px; font-size:15' class='btn btn-primary' value='download' onclick='App.download("+i+"); return false;'></input></td></tr>";
     }
     $('#rr').html(table);
     }
+    $("#files_form")[0].reset();
 },
   download: async(i)=>{
     var bfile = await App.contractInstance.get_filehash(i, {from: App.account});
@@ -303,9 +329,6 @@ var h = App.hash_file;
         }else if(type=="jpg"||type=="jpeg"){
 
          b = new Blob([array], {type: 'image/jpeg'});
-        }else if(type=="pdf"){
-
-         b = new Blob([array], {type: 'application/pdf'});
         }else if(type=="aac"){
 
          b = new Blob([array], {type: 'audio/aac'});
@@ -315,15 +338,18 @@ var h = App.hash_file;
         }else if(type=="docx"){
 
          b = new Blob([array], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-        }else if(type==".docx"){
-
-         b = new Blob([array], {type: 'application/pdf'});
         }else if(type=="gif"){
 
          b = new Blob([array], {type: 'image/gif'});
         }else if(type=="mp3"){
 
          b = new Blob([array], {type: 'audio/mpeg'});
+        }else if(type=="xlsx"){
+
+         b = new Blob([array], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        }else if(type=="xls"){
+
+         b = new Blob([array], {type: 'application/vnd.ms-excel'});
         }
         
     
@@ -348,18 +374,22 @@ var h = App.hash_file;
         if(App.m>0){
             App.title[0] = await App.contractInstance.get_title(0, {from: App.account});
      App.text[0] = await App.contractInstance.get_text(0, {from: App.account});
-    var table = "<tr><td>"+App.title[0]+"</td><td><input type='submit' value='reveal/hide' onclick='App.reveal_text("+i+"); return false;'></input></td></tr>";
+    var table = "<tr style='margin-bottom:5px; border-top:0.5px solid #ffffff; border-bottom:0.5px solid #ffffff'><td style='color:white;font-size:25'>"+App.title[0]+"</td><td><input type='submit' style='color: white;margin-top: 5px; font-size:15' class='btn btn-primary' value='reveal' onclick='App.reveal_text("+i+"); return false;'></input></td><td><input type='submit' style='color: white;margin-top: 5px; font-size:15' class='btn btn-primary' value='hide' onclick='App.hide_text("+i+"); return false;'></input></td></tr>";
     for ( i = 1; i<App.m; i++) {
      App.title[i] = await App.contractInstance.get_title(i, {from: App.account});
      App.text[i] = await App.contractInstance.get_text(i, {from: App.account});
-    table += "<tr><td>"+App.title[i]+"</td><td><input type='submit' value='reveal/hide' onclick='App.reveal_text("+i+"); return false;'></input></td></tr>";;
+    table += "<tr style='margin-bottom:5px; border-bottom:0.5px solid #ffffff'><td style='color:white;font-size:25'>"+App.title[i]+"</td><td><input type='submit' style='color: white;margin-top: 5px; font-size:15' class='btn btn-primary' value='reveal' onclick='App.reveal_text("+i+"); return false;'></input></td><td><input type='submit' style='color: white;margin-top: 5px; font-size:15' class='btn btn-primary' value='hide' onclick='App.hide_text("+i+"); return false;'></input></td></tr>";;
     }
     $('#ttable').html(table);
     }
+    $("#notepad_form")[0].reset();
   },
   reveal_text: async(el) =>{
     $("#notepad_title").val(App.title[el]);
     $("#notepad_text").val(App.text[el]);
+  },
+   hide_text: async(el) =>{
+    $("#notepad_form")[0].reset();
   },
 
 }

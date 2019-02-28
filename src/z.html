@@ -9,55 +9,63 @@
 		 <link href="css/bootstrap.min.css" rel="stylesheet">
 
 	</head>
-	<body>
+	<body style="background-color: #333333">
 		<!-- a form for getiing important identities
 		right now has only one field, additional fields can be added in the future -->
-		<div class="container-fluid">
-						<div class="row">
+		<div class="container-fluid" style="background-color: #333333">
+			<div class="row">
 
-					<div class="col-lg-10" style="background-color: white">
-		<div id="password_manager" >
-			<h2>Password manager</h2>
-		<form onSubmit="App.set(); return false;" class="form-group">
-				<label for="a_id"><b>Account name:</b></label>
-			<input type="text" id="a_name" class="form-control"></input>
-				<label for="a_id"><b>Password:</b></label>
-			<input type="password"  id="a_id" class="form-control"></input>
+			<div class="col-lg-10" style="background-color: #333333">
+		<div id="password_manager" hidden>
+			<h1 style="color: white;font-size: 40;"><b>Password manager</b></h1>
+		<form onSubmit="App.set(); return false;" id="pass_form" class="form-group">
+				<label for="a_id" style="color: white; font-size: 25;">Account name:</label>
+			<input type="text" id="a_name" class="w3-input"></input>
+
+				<label for="a_id" style="color: white;margin-top: 5px;font-size: 25;">Password:</label>
+			<input type="password"  id="a_id" class="w3-input w3-theme-d3"></input>
 			
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" style="color: white;margin-top: 10px; font-size: 20" class="btn btn-primary">Submit</button>
 		</form>
-			<table id="rtable" class="w3-table-all w3-card-4"></table>
+			<table id="rtable" style="margin-top: 10px;" class="w3-table w3-card-4 w3-large"></table>
+			<h1 align="center" style="color: white; font-size: 30" id="load1" hidden><b>Loading...</b></h1>
 		</div>
 		<div id="notepad" hidden>
-			<h2>Notepad</h2>
-			<form onSubmit="App.set_notepad(); return false;" class="form-group">
-				<label for="notepad_title"><b>Title:</b></label>
-				<input type="text" id="notepad_title" class="form-control"></input>
-				<label for="notepad_text"><b>Yours secrets:</b></label>
-				<textarea rows="5" cols="10" id="notepad_text" class="form-control"></textarea>
-				<button type="submit" class="btn btn-primary">Submit</button>
+			<h1 style="color: white;font-size: 40;"><b>Notepad</b></h1>
+			<form onSubmit="App.set_notepad(); return false;" id="notepad_form" class="form-group">
+				<label for="notepad_title" style="color: white; font-size: 25;"><b>Title:</b></label>
+				<input type="text" id="notepad_title" class="w3-input"></input>
+				<label for="notepad_text" style="color: white; font-size: 25; margin-top: 5px;"><b>Yours secrets:</b></label>
+				<textarea rows="5" cols="10" id="notepad_text"class="w3-input"></textarea>
+				<button type="submit" style="color: white;margin-top: 10px; font-size: 20" class="btn btn-primary">Submit</button>
 			</form>
-			<table id="ttable" class="w3-table-all w3-card-4"></table>
+			<table id="ttable" style="margin-top: 10px;" class="w3-table w3-card-4 w3-large"></table>
+			<h1 align="center" style="color: white; font-size: 30" id="load2" hidden><b>Loading...</b></h1>
+
 		</div>
-		 <div className="App" id="files" hidden>
+		 <div className="App" id="files">
        
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h2>Upload Files</h2>
-              <form onSubmit="App.submit(); return false;" >
-                <input type='file' onchange="App.get_files();" />
-                <input type='submit' id="submit_button" hidden />
+              <h1 style="color: white;font-size: 40;"><b>Upload Files</b></h1>
+              <form id="files_form" class="form-group">
+                <input class="w3-input" style="color: white;margin-top: 10px; font-size: 20"  type='file' onchange="App.get_files();" ></input>
+                <h3 style="color: white; font-size: 20; margin-left: 8px;" id="bleh" hidden>Uploading...</h3>
+                <button type="submit" onclick="App.submit(); return false;"  class="btn btn-primary" id="buttonn" style="margin-top: 10px;margin-left: 8px; font-size: 20; color: white" >Submit</button>
               </form>
-              <table id="rr" class="w3-table-all w3-card-4"></table>
+              <table id="rr" style="margin-top: 10px;" class="w3-table w3-card-4 w3-large"></table>
+            			<h1 align="center" style="color: white; font-size: 30" id="load3" hidden><b>Loading...</b></h1>
+
             </div>
           </div>
       </div>
 
 	</div>
-		<div class="col-lg-2" style="background-color: white">
-				<div>	<button class="w3-button w3-xxlarge" onclick="App.show_password(); return false;">Password</button></div>
-				<div>	<button class="w3-button w3-xxlarge" onclick="App.show_notepad(); return false;">Notepad</button></div>
-				<div>	<button class="w3-button w3-xxlarge" onclick="App.show_uploader(); return false;">Uploader</button></div>
+		<div class="col-lg-2" style="background-color: #333333">
+				<div>	<button class="w3-button w3-#333333 w3-card-4 w3-round-large w3-xxlarge" style="margin-top: 25px; color: white;" onclick="App.show_uploader(); return false;">Uploader</button></div>
+				
+				<div>	<button class="w3-button w3-#333333 w3-card-4 w3-round-large w3-xxlarge" style="margin-top: 35px; color: white;" onclick="App.show_password(); return false;">Password</button></div>
+				<div>	<button class="w3-button w3-#333333 w3-card-4 w3-round-large w3-xxlarge" style="margin-top: 25px; color: white;" onclick="App.show_notepad(); return false;">Notepad</button></div>
 				</div>
 </div>
 
