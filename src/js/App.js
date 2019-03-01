@@ -23,7 +23,7 @@ App = {
     await App.initcontract();
     await App.render();
      $("#load3").show();
-
+ $("#buttonn").prop('disabled', true);
     await App.gandu_function();
     $("#load3").hide();
     $("#load1").show();
@@ -246,6 +246,7 @@ document.getElementById("signup").style.display = "none";
   },
 
   get_files: async()=>{
+    $("#buttonn").prop('disabled', true);
   App.file = await document.querySelector('input[type=file]').files[0];
  var reader= new FileReader();
   App.name_file = App.file.name;
